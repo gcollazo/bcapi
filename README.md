@@ -1,8 +1,8 @@
 # BarcampCheckin
-A very simple backend to save data from the check-in app.
+A very simple backend to save data from the check-in app. Based on Flask and MongoDB.
 
 ## Heroku URL
-http://quiet-sky-9376.herokuapp.com
+http://barcampm12.herokuapp.com/
 
 ## Endpoints
 ### /event/[event_name]/
@@ -14,8 +14,22 @@ http://quiet-sky-9376.herokuapp.com
     
     ```
     [
-        {"user":"1234567890", "checked_in": false},
-        {"user":"2123456789", "checked_in": true}
+        {
+            _id: {
+            	$oid: "4f4922165b25fa0007000000"
+        	},
+            checked_in: true,
+            name: "Juan del Pueblo",
+            event: "BarcampM12"
+        },
+        {
+            _id: {
+            	$oid: "4f4922165b25fa0007000001"
+        	},
+            checked_in: false,
+            name: "Maria Rivera",
+            event: "BarcampM12"
+        }
     ]
     ```
 
@@ -23,25 +37,29 @@ http://quiet-sky-9376.herokuapp.com
 
     ```
     [
-        {"user": "1234567890", "checked_in": false},
-        {"user": "238476", "checked_in": false}
+        {"name": "Juan del Pueblo", "checked_in": false},
+        {"name": "Maria Rivera", "checked_in": false}
     ]
     ```
 
 ### /event/[event_name]/[user_id]/
 - GET will return user details
+
     ```
-    {
-        "user": "1234567890"
-        "checked_in": true
-    }
+	{
+	   _id: {
+	   	$oid: "4f4922165b25fa0007000001"
+	},
+	   checked_in: false,
+	   name: "Maria Rivera",
+	   event: "BarcampM12"
+	}
     ```
 
 - PUT will update the user state. Just send something like:
     
     ```
     {
-        "user": "1234567890"
         "checked_in": true
     }
     ```
