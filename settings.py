@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, urlparse
 from pymongo.uri_parser import parse_uri
 
 
