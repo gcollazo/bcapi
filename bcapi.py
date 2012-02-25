@@ -27,6 +27,11 @@ def teardown_request(exception):
 
 
 # Views
+@app.route('/event', methods=['GET'])
+def events():
+    return json.dumps(g.db.event_user.distinct('event'), default=json_util.default)
+
+
 @app.route('/event/<event_id>', methods=['GET', 'POST'])
 def event(event_id):
     if request.method == 'GET':
