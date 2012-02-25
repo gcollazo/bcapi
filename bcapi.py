@@ -1,3 +1,4 @@
+import os
 from pymongo import Connection, ASCENDING
 from bson.objectid import ObjectId
 from bson import json_util
@@ -64,4 +65,5 @@ def user(event_id, user_id):
 
 
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
