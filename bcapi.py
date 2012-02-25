@@ -1,4 +1,5 @@
 import os
+import pusher
 from pymongo import Connection, ASCENDING
 from bson.objectid import ObjectId
 from bson import json_util
@@ -6,8 +7,14 @@ from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, jsonify, json
 
 
+# The app
 app = Flask(__name__)
 app.config.from_object('settings')
+
+# Pusher
+pusher.app_id = app.config['PUSHER_APP_ID']
+pusher.key = app.config['PUSHER_KEY']
+pusher.secret = app.config['PUSHER_SECRET']
 
 
 # DB Connection
@@ -47,6 +54,9 @@ def event(event_id):
             events.append(e)
         g.db.event_user.insert(events)
         g.db.event_user.create_index([('event', ASCENDING)])
+        
+        p = pusher.Pusher()
+        p['core'].trigger('user_created', json.loads(json.dumps(events, default=json_util.default)))
         return json.dumps(events, default=json_util.default)
 
 
@@ -61,6 +71,9 @@ def user(event_id, user_id):
         g.db.event_user.update({'event':event_id, '_id':ObjectId(user_id)},
             {"$set": {"checked_in": put['checked_in']}})
         user = g.db.event_user.find_one({'event':event_id, '_id':ObjectId(user_id)})
+
+        p = pusher.Pusher()
+        p['core'].trigger('user_updated', json.loads(json.dumps(user, default=json_util.default)))
         return json.dumps(user, default=json_util.default)
 
 
