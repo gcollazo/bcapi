@@ -1,5 +1,5 @@
 # BarcampCheckin
-A very simple backend to save data from the check-in app. Based on Flask and MongoDB.
+A very simple backend to save data from the check-in app. Based on Flask, MongoDB and pusherapp.com.
 
 ## Heroku URL
 http://barcampm12.herokuapp.com/
