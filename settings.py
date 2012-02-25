@@ -2,7 +2,10 @@ import os, sys
 from pymongo.uri_parser import parse_uri
 
 # App Settings
-DEBUG = True
+if os.environ.has_key('PRODUCTION'):
+    DEBUG = False
+else:
+    DEBUG = True
 SECRET_KEY = 'vwuVh1sQ9/QbT_kj SOR!*;44m%@&U%~kGY'
 
 # Database Settings
