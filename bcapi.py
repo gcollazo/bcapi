@@ -12,7 +12,7 @@ app.config.from_object('settings')
 
 # DB Connection
 def connect_db():
-    connection = Connection(app.config['DB_HOST'], app.config['DB_PORT'])
+    connection = Connection(app.config['DB_URI'])
     return connection[app.config['DB_NAME']]
 
 
